@@ -40,3 +40,35 @@ function showData(){
 
     document.querySelector('#tableData tbody').innerHTML = html;
 }
+
+//create
+document.onload = showData();
+
+function AddData(){
+    if (validateForm() == true) {
+        
+        let name = document.getElementById('inputName').value;
+        let date = document.getElementById('inputDate').value;
+
+        var listPeople;
+        if (localStorage.getItem('listPeople') == null) {
+            listPeople = [];
+        }else{
+            listPeople = JSON.parse(localStorage.getItem("listPeople"));
+        }
+
+        listPeople.push({
+           
+            name: name,
+            date: date,
+        });
+
+        localStorage.setItem('listPeople', JSON.stringify(listPeople));
+
+        showData();
+
+       
+        document.getElementById('inputName').value = "";
+        document.getElementById('inputDate').value = "";
+    }
+}
