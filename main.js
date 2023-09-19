@@ -72,3 +72,54 @@ function AddData(){
         document.getElementById('inputDate').value = "";
     }
 }
+
+/*delete */
+function deleteData(index){
+
+    var listPeople;
+    if (localStorage.getItem('listPeople') == null) {
+        listPeople = [];
+    }else{
+        listPeople = JSON.parse(localStorage.getItem("listPeople"));
+    }
+
+    listPeople.splice(index, 1);
+    localStorage.setItem('listPeople', JSON.stringify(listPeople));
+    showData();
+}
+
+/*update */
+
+function updateData(index){
+    document.getElementById("btnAdd").style.display = 'none';
+    document.getElementById("btnUpdate",btnAdd).style.display = 'block';
+
+    var listPeople;
+    if (localStorage.getItem('listPeople') == null) {
+        listPeople = [];
+    }else{
+        listPeople = JSON.parse(localStorage.getItem("listPeople"));
+    }
+
+    
+    document.getElementById('inputName').value = listPeople[index].name;
+    document.getElementById('inputDate').value = listPeople[index].date;
+
+    document.querySelector("#btnUpdate").onclick = function(){
+        if (validateForm() == true) {
+            
+            listPeople[index].name = document.getElementById('inputName').value;
+            listPeople[index].date = document.getElementById('inputDate').value;
+
+            localStorage.setItem('listPeople', JSON.stringify(listPeople));
+            showData();
+
+            
+            document.getElementById('inputName').value = "";
+            document.getElementById('inputDate').value = "";
+
+            document.getElementById("btnAdd").style.display = 'block';
+            document.getElementById("btnUpdate",btnAdd).style.display = 'none';
+        }
+    };
+}
