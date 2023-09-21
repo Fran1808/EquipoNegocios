@@ -1,15 +1,40 @@
+//Validation form
 function validateForm(){
 
-    let name = document.getElementById('inputName').value;
-    let date = document.getElementById('inputDate').value;
+    let IdProducto = document.getElementById('inputIdProducto').value;
+    let Nombre = document.getElementById('inputNombre').value;
+    let Categoria = document.getElementById('inputCategoria').value;
+    let Precio = document.getElementById('inputPrecio').value;
+    let Descripcion = document.getElementById('inputDescripcion').value;
+    let Date = document.getElementById('inputDate').value;
 
-    if (name == "") {
-        alert('El Producto es requerido');
+    if (IdProducto == "") {
+        alert('El Id Producto es requerido');
         return false;
     }
 
-    if (date == "") {
-        alert('La fecha es requerida');
+    if (Nombre == "") {
+        alert('El Nombre es requerido');
+        return false;
+    }
+
+    if (Categoria == "") {
+        alert('La Categoria es requerida');
+        return false;
+    }
+
+    if (Precio == "") {
+        alert('El Precio es requerido');
+        return false;
+    }
+
+    if (Descripcion == "") {
+        alert('La Descripcion es requerida');
+        return false;
+    }
+
+    if (Date == "") {
+        alert('La Fecha es requerida');
         return false;
     }
 
@@ -31,10 +56,14 @@ function showData(){
 
     listPeople.forEach(function(element, index){
         html += "<tr>";
-        html += '<td class="col-md-1"; style="text-align: center"><button onclick="updateData('+ index +')" class="btn btn-outline-dark"><i class="bi bi-pencil-square"></i></i></button></td>';
-        html += '<td class="col-md-5">' + element.name + '</td>';
-        html += '<td class="col-md-3">' + element.date + '</td>';
-        html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData('+ index +')" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i></button></td>';
+        html += '<td class="col-md-1"; style="text-align: center"><button onclick="updateData(' + index + ')" class="btn btn-outline-dark"><i class="bi bi-pencil-square"></i></i></button></td>';
+        html += '<td class="col-md-1">' + element.IdProducto + '</td>';
+        html += '<td class="col-md-2">' + element.Nombre + '</td>';
+        html += '<td class="col-md-2">' + element.Categoria + '</td>';
+        html += '<td class="col-md-2">' + element.Precio + '</td>';
+        html += '<td class="col-md-3">' + element.Descripcion + '</td>';
+        html += '<td class="col-md-2">' + element.Date + '</td>';
+        html += '<td class="col-md-1"; style="text-align: center"><button onclick="deleteData(' + index + ')" class="btn btn-outline-dark"><i class="bi bi-x-lg"></i></button></td>';
         html += "</tr>";
     });
 
@@ -47,28 +76,39 @@ document.onload = showData();
 function AddData(){
     if (validateForm() == true) {
         
-        let name = document.getElementById('inputName').value;
-        let date = document.getElementById('inputDate').value;
+        let IdProducto = document.getElementById('inputIdProducto').value;
+        let Nombre = document.getElementById('inputNombre').value;
+        let Categoria = document.getElementById('inputCategoria').value;
+        let Precio = document.getElementById('inputPrecio').value;
+        let Descripcion = document.getElementById('inputDescripcion').value;
+        let Date = document.getElementById('inputDate').value;
 
         var listPeople;
+
         if (localStorage.getItem('listPeople') == null) {
             listPeople = [];
-        }else{
+        } else {
             listPeople = JSON.parse(localStorage.getItem("listPeople"));
         }
 
         listPeople.push({
-           
-            name: name,
-            date: date,
+            IdProducto: IdProducto,
+            Nombre: Nombre,
+            Categoria: Categoria,
+            Precio: Precio,
+            Descripcion: Descripcion,
+            Date: Date
         });
 
         localStorage.setItem('listPeople', JSON.stringify(listPeople));
 
         showData();
 
-       
-        document.getElementById('inputName').value = "";
+        document.getElementById('inputIdProducto').value = "";
+        document.getElementById('inputNombre').value = "";
+        document.getElementById('inputCategoria').value = "";
+        document.getElementById('inputPrecio').value = "";
+        document.getElementById('inputDescripcion').value = "";
         document.getElementById('inputDate').value = "";
     }
 }
@@ -102,20 +142,35 @@ function updateData(index){
     }
 
     
-    document.getElementById('inputName').value = listPeople[index].name;
-    document.getElementById('inputDate').value = listPeople[index].date;
+    document.getElementById('inputIdProducto').value = listPeople[index].IdProducto;
+    document.getElementById('inputNombre').value = listPeople[index].Nombre;
+    document.getElementById('inputCategoria').value = listPeople[index].Categoria;
+    document.getElementById('inputPrecio').value = listPeople[index].Precio;
+    document.getElementById('inputDescripcion').value = listPeople[index].Descripcion;
+    document.getElementById('inputDate').value = listPeople[index].Date;
 
     document.querySelector("#btnUpdate").onclick = function(){
         if (validateForm() == true) {
             
-            listPeople[index].name = document.getElementById('inputName').value;
-            listPeople[index].date = document.getElementById('inputDate').value;
+            listPeople[index].IdProducto = document.getElementById('inputIdProducto').value;
+            listPeople[index].Nombre = document.getElementById('inputNombre').value;
+            listPeople[index].Categoria = document.getElementById('inputCategoria').value;
+            listPeople[index].Precio = document.getElementById('inputPrecio').value;
+            listPeople[index].Descripcion = document.getElementById('inputDescripcion').value;
+            listPeople[index].Date = document.getElementById('inputDate').value;
+         
 
             localStorage.setItem('listPeople', JSON.stringify(listPeople));
             showData();
 
             
             document.getElementById('inputName').value = "";
+            document.getElementById('inputDate').value = "";
+            document.getElementById('inputIdProducto').value = "";
+            document.getElementById('inputNombre').value = "";
+            document.getElementById('inputCategoria').value = "";
+            document.getElementById('inputPrecio').value = "";
+            document.getElementById('inputDescripcion').value = "";
             document.getElementById('inputDate').value = "";
 
             document.getElementById("btnAdd").style.display = 'block';
